@@ -14,7 +14,7 @@
 </div>
 @endif
 
-<a href="{{ url('empleados/create' )}}" class="btn btn-success">Agregar Empleado</a>
+<a href="{{ url('productos/create' )}}" class="btn btn-success">Agregar Producto</a>
 <br>
 <br>
 
@@ -26,9 +26,9 @@
                 <div class="page-header">
                     <p>
                        
-                        {{ Form::open(['route' => 'empleados.index', 'method' => 'GET', 'class' => 'form-inline pull-right']) }}
+                        {{ Form::open(['route' => 'productos.index', 'method' => 'GET', 'class' => 'form-inline pull-right']) }}
                             <div class="form-group">
-                                {{ Form::text( 'Nombre', null, ['class' => 'form-control', 'placeholder' => 'Nombre']) }}
+                                {{ Form::text( 'Descripcion', null, ['class' => 'form-control', 'placeholder' => 'Descripcion']) }}
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">
@@ -52,46 +52,44 @@
             
             <th>#</th>
             <th>Foto</th>
-            <th>Nombre</th>
-            <th>Direccion</th>
-            <th>Ciudad</th>
-            <th>Telefono</th>
-            <th>Correo</th>
-            <th>Cargo</th>
-            <th>Salario</th>
+            <th>Descripcion</th>
+            <th>Departamento</th>
+            <th>Existencia</th>
+            <th>StockMaximo</th>
+            <th>StockMinimo</th>
             <th>Status</th>
             <th>Acciones</th>
+
+          
         </tr>
     </thead>
     <tbody>
-        @foreach ($empleados as $empleado)
+        @foreach ($productos as $producto)
         
             <tr>
 
 
                     <!-- <td>{{$loop->iteration}}</td> -->
-                    <td>{{$empleado->id}}</td>
+                    <td>{{$producto->id}}</td>
 
                     <td>
-                    <img src="{{ asset('storage').'/'.$empleado->Foto}}" class="img-thumbnail img-fluid" alt="" width="100">
+                    <img src="{{ asset('storage').'/'.$producto->Foto}}" class="img-thumbnail img-fluid" alt="" width="100">
                     
                     </td>
                     
-                    <td>{{$empleado->Nombre}}</td>
-                    <td>{{$empleado->Direccion}}</td>
-                    <td>{{$empleado->Ciudad}}</td>
-                    <td>{{$empleado->Telefono}}</td>
-                    <td>{{$empleado->Correo}}</td>
-                    <td>{{$empleado->Cargo}}</td>
-                    <td>{{$empleado->Salario}}</td>
-                    <td>{{$empleado->Status}}</td>
+                    <td>{{$producto->Descripcion}}</td>
+                    <td>{{$producto->Departamento}}</td>
+                    <td>{{$producto->Existencia}}</td>
+                    <td>{{$producto->StockMaximo}}</td>
+                    <td>{{$producto->StockMinimo}}</td>
+                    <td>{{$producto->Status}}</td>
                     <td>
                         
-                        <a class="btn btn-warning" href="{{ url('/empleados/'.$empleado->id.'/edit' )}}">
+                        <a class="btn btn-warning" href="{{ url('/productos/'.$producto->id.'/edit' )}}">
                          Editar   
                         </a> 
 
-                        <form method="POST" action="{{ url('/empleados/'.$empleado->id )}}" style="display:inline">
+                        <form method="POST" action="{{ url('/productos/'.$producto->id )}}" style="display:inline">
                             {{ csrf_field() }} 
                             {{method_field('DELETE')}}    
                             <button class="btn btn-danger" type="submit" onclick="return confirm('¿Borrar?');">Borrar</button> 
@@ -102,7 +100,7 @@
     </tbody>
 </table>
 
-{{ $empleados->links() }} 
+{{ $productos->links() }} 
 </div>
 
 @endsection

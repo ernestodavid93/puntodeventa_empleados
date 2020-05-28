@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Empleados;
+use App\Clientes;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class EmpleadosController extends Controller
+class ClientesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,12 +19,12 @@ class EmpleadosController extends Controller
         $Nombre = $request->get('Nombre');
         
        // $datos['empleados']=Empleados::paginate(5);
-        $datos['empleados'] = Empleados::orderBy('Id', 'DESC')
+        $datos['clientes'] = Clientes::orderBy('Id', 'DESC')
             ->where('Nombre', 'LIKE', "%$Nombre%")
             //->Nombre($Nombre)
             ->paginate(5);
         
-        return view('empleados.index', $datos);
+        return view('clientes.index', $datos);
 
         
     
@@ -38,7 +38,7 @@ class EmpleadosController extends Controller
     public function create()
     {
         //
-        return view('empleados.create');
+        return view('clientes.create');
     }
 
     /**
@@ -51,15 +51,16 @@ class EmpleadosController extends Controller
     {
 
         $campos=[
+
+            'Rfc' => 'required|string|max:100',
             'Nombre' => 'required|string|max:100',
-            'Direccion' => 'required|string|max:100',
+            'Domicilio' => 'required|string|max:100',
             'Ciudad' => 'required|string|max:100',
             'Telefono' => 'required|string|max:15',
             'Correo' => 'required|email',
-            'Cargo' => 'required|string|max:100',
-            'Salario' => 'required|string|max:100',
-            'Status' => 'required|string|max:100',
+            'CP' => 'required|string|max:100',
             'Foto' => 'required|max:10000|mimes:jpg,png,jpeg',
+            
 
         ];
 
@@ -68,23 +69,23 @@ class EmpleadosController extends Controller
 
         //
         //$datosEmpleado=request()->all();
-        $datosEmpleado=request()->except('_token');
+        $datosCliente=request()->except('_token');
         if($request->hasFile('Foto')){
-            $datosEmpleado['Foto']=$request->file('Foto')->store('uploads', 'public');
+            $datosCliente['Foto']=$request->file('Foto')->store('uploads', 'public');
         }
-        Empleados::insert($datosEmpleado);
+        Clientes::insert($datosCliente);
 
         //return response()->json($datosEmpleado);
-        return redirect('empleados')->with('Mensaje', 'Empleado agregado con exito');
+        return redirect('clientes')->with('Mensaje', 'Cliente agregado con exito');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Empleados  $empleados
+     * @param  \App\Clientes  $clientes
      * @return \Illuminate\Http\Response
      */
-    public function show(Empleados $empleados)
+    public function show(Clientes $clientes)
     {
         //
     }
@@ -92,35 +93,35 @@ class EmpleadosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Empleados  $empleados
+     * @param  \App\Clientes  $clientes
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         //
-        $empleado = Empleados::findOrFail($id);
-        return view('empleados.edit', compact('empleado'));
+        $cliente = Clientes::findOrFail($id);
+        return view('clientes.edit', compact('cliente'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Empleados  $empleados
+     * @param  \App\Clientes  $cliente
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         //
         $campos=[
+
+            'Rfc' => 'required|string|max:100',
             'Nombre' => 'required|string|max:100',
-            'Direccion' => 'required|string|max:100',
+            'Domicilio' => 'required|string|max:100',
             'Ciudad' => 'required|string|max:100',
             'Telefono' => 'required|string|max:15',
             'Correo' => 'required|email',
-            'Cargo' => 'required|string|max:100',
-            'Salario' => 'required|string|max:100',
-            'Status' => 'required|string|max:100',
+            'CP' => 'required|string|max:100',
             
 
         ];
@@ -135,39 +136,39 @@ class EmpleadosController extends Controller
         $this->validate($request,$campos,$Mensaje);
 
 
-        $datosEmpleado=request()->except(['_token', '_method']);
+        $datosCliente=request()->except(['_token', '_method']);
 
         if($request->hasFile('Foto')){
-            $empleado = Empleados::findOrFail($id);
-            Storage::delete('public/'.$empleado->Foto);
-            $datosEmpleado['Foto']=$request->file('Foto')->store('uploads', 'public');
+            $cliente = Clientes::findOrFail($id);
+            Storage::delete('public/'.$cliente->Foto);
+            $datosCliente['Foto']=$request->file('Foto')->store('uploads', 'public');
         }
 
-        Empleados::where('id', '=', $id)->update($datosEmpleado);
+        Clientes::where('id', '=', $id)->update($datosCliente);
 
-        $empleado = Empleados::findOrFail($id);
-        return view('empleados.edit', compact('empleado'));
+        $cliente = Clientes::findOrFail($id);
+        return view('clientes.edit', compact('cliente'));
         //return redirect('empleados')->with('Mensaje', 'Empleado modificado con exito');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Empleados  $empleados
+     * @param  \App\Clientes  $clientes
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
-        $empleado = Empleados::findOrFail($id);
+        $cliente = Clientes::findOrFail($id);
 
-        if(Storage::delete('public/'.$empleado->Foto)){
-            Empleados::destroy($id);
+        if(Storage::delete('public/'.$cliente->Foto)){
+            Clientes::destroy($id);
         }
 
         
 
         
-        return redirect('empleados')->with('Mensaje', 'Empleado eliminado con exito');
+        return redirect('clientes')->with('Mensaje', 'Cliente eliminado con exito');
     }
 }

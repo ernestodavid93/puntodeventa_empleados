@@ -14,7 +14,7 @@
 </div>
 @endif
 
-<a href="{{ url('empleados/create' )}}" class="btn btn-success">Agregar Empleado</a>
+<a href="{{ url('clientes/create' )}}" class="btn btn-success">Agregar Cliente</a>
 <br>
 <br>
 
@@ -26,7 +26,7 @@
                 <div class="page-header">
                     <p>
                        
-                        {{ Form::open(['route' => 'empleados.index', 'method' => 'GET', 'class' => 'form-inline pull-right']) }}
+                        {{ Form::open(['route' => 'clientes.index', 'method' => 'GET', 'class' => 'form-inline pull-right']) }}
                             <div class="form-group">
                                 {{ Form::text( 'Nombre', null, ['class' => 'form-control', 'placeholder' => 'Nombre']) }}
                             </div>
@@ -52,46 +52,48 @@
             
             <th>#</th>
             <th>Foto</th>
+            <th>RFC</th>
             <th>Nombre</th>
-            <th>Direccion</th>
+            <th>Domicilio</th>
             <th>Ciudad</th>
             <th>Telefono</th>
             <th>Correo</th>
-            <th>Cargo</th>
-            <th>Salario</th>
-            <th>Status</th>
+            <th>CP</th>
             <th>Acciones</th>
+
+
         </tr>
     </thead>
     <tbody>
-        @foreach ($empleados as $empleado)
+        @foreach ($clientes as $cliente)
         
             <tr>
 
 
                     <!-- <td>{{$loop->iteration}}</td> -->
-                    <td>{{$empleado->id}}</td>
+                    <td>{{$cliente->id}}</td>
 
                     <td>
-                    <img src="{{ asset('storage').'/'.$empleado->Foto}}" class="img-thumbnail img-fluid" alt="" width="100">
+                    <img src="{{ asset('storage').'/'.$cliente->Foto}}" class="img-thumbnail img-fluid" alt="" width="100">
                     
                     </td>
                     
-                    <td>{{$empleado->Nombre}}</td>
-                    <td>{{$empleado->Direccion}}</td>
-                    <td>{{$empleado->Ciudad}}</td>
-                    <td>{{$empleado->Telefono}}</td>
-                    <td>{{$empleado->Correo}}</td>
-                    <td>{{$empleado->Cargo}}</td>
-                    <td>{{$empleado->Salario}}</td>
-                    <td>{{$empleado->Status}}</td>
+                    <td>{{$cliente->Rfc}}</td>
+                    <td>{{$cliente->Nombre}}</td>
+                    <td>{{$cliente->Domicilio}}</td>
+                    <td>{{$cliente->Ciudad}}</td>
+                    <td>{{$cliente->Telefono}}</td>
+                    <td>{{$cliente->Correo}}</td>
+                    <td>{{$cliente->CP}}</td>
+                    
+    
                     <td>
                         
-                        <a class="btn btn-warning" href="{{ url('/empleados/'.$empleado->id.'/edit' )}}">
+                        <a class="btn btn-warning" href="{{ url('/clientes/'.$cliente->id.'/edit' )}}">
                          Editar   
                         </a> 
 
-                        <form method="POST" action="{{ url('/empleados/'.$empleado->id )}}" style="display:inline">
+                        <form method="POST" action="{{ url('/cliente/'.$cliente->id )}}" style="display:inline">
                             {{ csrf_field() }} 
                             {{method_field('DELETE')}}    
                             <button class="btn btn-danger" type="submit" onclick="return confirm('¿Borrar?');">Borrar</button> 
@@ -102,7 +104,7 @@
     </tbody>
 </table>
 
-{{ $empleados->links() }} 
+{{ $clientes->links() }} 
 </div>
 
 @endsection

@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'Nombre', 'email', 'password',
     ];
 
     /**
@@ -36,4 +36,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    
+    
+//Scope
+
+/**public function scopeNombre($query, $Nombre)
+{
+    if($Nombre)
+        return $query->where('Nombre', 'LIKE', "%$Nombre%" );
+
+    return $query->where('Nombre', 'LIKE', "%$Nombre%");
+} **/
+
+
 }
